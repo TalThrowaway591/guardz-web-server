@@ -2,15 +2,26 @@
     "name": "guardz-web-server",
     "version": "1.0.0",
     "main": "index.js",
-    "type": "module",
     "scripts": {
-        "start": "node index.js"
+        "build": "tsc"
     },
     "keywords": [],
     "author": "",
     "license": "ISC",
     "description": "",
     "dependencies": {
-        "fastify": "^5.3.2"
+        "@fastify/cors": "^11.0.1",
+        "config": "^3.3.12",
+        "dotenv": "^16.5.0",
+        "express": "^5.1.0",
+        "fastify": "^5.3.2",
+        "joi": "^17.13.3",
+        "mysql2": "^3.14.1",
+        "nanoid": "^5.1.5"
+    },
+    "devDependencies": {
+        "@types/config": "^3.3.5",
+        "@types/express": "^5.0.1",
+        "@types/node": "^22.15.3"
     }
 }
