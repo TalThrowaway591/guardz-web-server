@@ -70,8 +70,12 @@ const createServer = async (): Promise<Application> => {
     const assetsPath = path.join(__dirname, "../../../guardz-app/build/client");
 
     console.log('assetsPath', assetsPath)
+
     app.use("/", express.static(assetsPath));
+
     app.use("/submit", express.static(assetsPath));
+
+    app.use("/data", express.static(assetsPath));
 
     return app;
 };

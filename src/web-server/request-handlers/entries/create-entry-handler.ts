@@ -1,7 +1,20 @@
 import { Request, NextFunction, Response } from 'express';
 import { EntryEntity } from "../../../app/entities/entry-entity";
 
-// TODO: fix any
+const getUserIPAddress = (request: Request): string => {
+    // TODO: implement more solid functionality for
+    // determining user IP address, add exceptions
+
+    // in case client is behind a proxy
+    const underlyingIP = request.headers['x-forwarded-for'];
+
+    if (typeof underlyingIP === "string") {
+        return underlyingIP;
+    }
+
+    return request.socket.remoteAddress || 'no-ip';
+}
+
 const createEntryHandler = async (req: Request, res: Response<any[] | string>, next: NextFunction) => {
     console.log('reached handler')
     console.log('request body')
@@ -9,7 +22,7 @@ const createEntryHandler = async (req: Request, res: Response<any[] | string>, n
 
     const { title, body } = req.body;
 
-    const ip = "tttt";
+    const userIPAddress = getUserIPAddress(req);
 
 
     const entryEntityGateway = req.appProfile.getEntryEntityGateway();
@@ -18,7 +31,7 @@ const createEntryHandler = async (req: Request, res: Response<any[] | string>, n
 
     entryEntity.setTitle(title);
     entryEntity.setBody(body);
-    entryEntity.setIP(ip);
+    entryEntity.setIP(userIPAddress);
     entryEntity.setActive(true);
     entryEntity.setCreatedTimestamp(Date.now())
 
