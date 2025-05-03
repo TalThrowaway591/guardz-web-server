@@ -1,3 +1,4 @@
+import path from 'path'
 import express, { Application, Request, Response, NextFunction } from "express";
 import { Database, EntryEntityType, Entity } from "../types";
 import nanoid from "nanoid";
@@ -66,7 +67,11 @@ const createServer = async (): Promise<Application> => {
 
     registerRequestHandlers(app);
 
-    // app.use("/", express.static(path.join(__dirname, "../../public"), { etag: false, maxAge: 0 }));
+    const assetsPath = path.join(__dirname, "../../../guardz-app/build/client");
+
+    console.log('assetsPath', assetsPath)
+    app.use("/", express.static(assetsPath));
+    app.use("/submit", express.static(assetsPath));
 
     return app;
 };

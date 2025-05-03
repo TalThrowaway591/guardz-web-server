@@ -1,7 +1,7 @@
 const routes = {
     entries: {
-        create: "/entries",
-        list: "/entries"
+        create: "/api/entries",
+        list: "/api/entries"
     }
 }
 
