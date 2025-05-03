@@ -1,4 +1,4 @@
-import { EntryEntity } from "../../../app/entities/entry-entity";
+import { EntryEntity } from "../../../types";
 import { Request, NextFunction } from 'express';
 import { InMemoryDb } from "../../../databases/in-memory";
 

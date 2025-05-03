@@ -1,6 +1,7 @@
 import { EntryEntity } from "../../types";
-// import { PostEntityGateway } from "../../app/ports/entity-gateways/post-entity-gateway";
+import { EntryEntityGateway } from "../../app/ports/entry-entity-gateway";
 import { InMemoryDb } from "../../databases/in-memory";
+import { EntryInMemoryEntityGateway } from "../../adapters/in-memory-data-access/gateways/entry-in-memory-entity-gateway";
 
 type Config = {
     inMemoryDb: InMemoryDb<EntryEntity>;
@@ -14,7 +15,7 @@ abstract class AppProfile {
     }
 
     public getEntryEntityGateway(): EntryEntityGateway {
-        return new mongoDataAccess.PostMongoEntityGateway(this.mongoDb);
+        return new EntryInMemoryEntityGateway(this.inMemoryDb);
     }
 
     // public getInteractorConfig(): InteractorConfig {
