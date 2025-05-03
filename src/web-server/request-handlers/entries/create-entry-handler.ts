@@ -1,19 +1,6 @@
 import { Request, NextFunction, Response } from 'express';
 import { EntryEntity } from "../../../app/entities/entry-entity";
-
-const getUserIPAddress = (request: Request): string => {
-    // TODO: implement more solid functionality for
-    // determining user IP address, add exceptions
-
-    // in case client is behind a proxy
-    const underlyingIP = request.headers['x-forwarded-for'];
-
-    if (typeof underlyingIP === "string") {
-        return underlyingIP;
-    }
-
-    return request.socket.remoteAddress || 'no-ip';
-}
+import { getUserIPAddress } from '../../utils/get-ip';
 
 const createEntryHandler = async (req: Request, res: Response<any[] | string>, next: NextFunction) => {
     console.log('reached handler')

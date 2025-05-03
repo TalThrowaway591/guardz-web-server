@@ -1,7 +1,7 @@
 import { EntryEntityType } from "../../../types";
 import { Request, NextFunction, Response } from 'express';
 import { InMemoryDb } from "../../../databases/in-memory";
-
+import { getUserIPAddress } from "../../utils/get-ip";
 // TODO: fix any
 const listEntriesHandler = async (req: Request, res: Response<any[] | string>, next: NextFunction) => {
 
@@ -10,7 +10,9 @@ const listEntriesHandler = async (req: Request, res: Response<any[] | string>, n
 
     const entryEntityGateway = req.appProfile.getEntryEntityGateway();
 
-    const entries = await entryEntityGateway.list();
+    const ipAddress = getUserIPAddress(req);
+
+    const entries = await entryEntityGateway.listByIP(ipAddress);
 
     res.send(entries);
 }

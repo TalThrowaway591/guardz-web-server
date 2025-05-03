@@ -55,6 +55,17 @@ class EntryPostgresEntityGateway implements EntryEntityGateway {
         return result.map(value => mapRowToEntry(value));
     }
 
+    async listByIP(ipAddress: string): Promise<EntryEntity[]> {
+        console.log('entry-postgres-entity-gateway list by ip')
+
+        const result = await this.db.get();
+
+        const entries = result.map(value => mapRowToEntry(value));
+
+        return entries.filter(entry => entry.getIP() === ipAddress)
+
+    }
+
     async save(entryEntity: EntryEntity): Promise<void> {
         console.log('gateway: saving entry')
         console.log(entryEntity);

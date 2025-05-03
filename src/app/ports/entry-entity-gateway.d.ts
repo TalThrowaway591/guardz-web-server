@@ -1,9 +1,11 @@
 import { EntryEntity } from "../types";
 
 interface EntryEntityGateway {
+    save(entryEntity: EntryEntityj): Promise<void>;
+
     list(): Promise<EntryEntity[]>;
 
-    save(entryEntity: EntryEntityj): Promise<void>;
+    listByIP(ipAddress: string): Promise<EntryEntity[]>;
 }
 
 export { EntryEntityGateway };
