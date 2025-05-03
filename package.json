@@ -3,7 +3,8 @@
     "version": "1.0.0",
     "main": "index.js",
     "scripts": {
-        "build": "tsc"
+        "build": "tsc --outDir build --watch",
+        "start": "node build/web-server/index.js"
     },
     "keywords": [],
     "author": "",

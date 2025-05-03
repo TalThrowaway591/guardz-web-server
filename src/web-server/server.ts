@@ -4,8 +4,8 @@ import nanoid from "nanoid";
 import { InMemoryDb } from "../databases/in-memory";
 import { AppProfile } from "./app-profile/app-profile";
 import { LocalAppProfile } from "./app-profile/local-app-profile";
-// import { routes } from "./routes";
-// import * as requestHandlers from "./request-handlers";
+import { routes } from "./routes";
+import * as requestHandlers from "./request-handlers/index";
 // import { LocaAppProfile } from "./app-profile/local-app-profile";
 // import { Config } from "./config";
 // import { AppProfile } from "./app-profile/app-profile";
@@ -45,11 +45,11 @@ const registerMiddlewares = (app: Application, appProfile: AppProfile): Applicat
     return app;
 };
 
-// const registerRequestHandlers = (app: Application): Application => {
-//     app.get(routes.entries.list, requestHandlers.listPostsHandler);
+const registerRequestHandlers = (app: Application): Application => {
+    app.get(routes.entries.list, requestHandlers.listEntriesHandler);
 
-//     return app;
-// };
+    return app;
+};
 
 const createServer = async (database: InMemoryDb<EntryEntity>): Promise<Application> => {
     const app = express();
@@ -61,7 +61,8 @@ const createServer = async (database: InMemoryDb<EntryEntity>): Promise<Applicat
     const appProfile = new LocalAppProfile(config);
 
     registerMiddlewares(app, appProfile);
-    // registerRequestHandlers(app);
+
+    registerRequestHandlers(app);
 
     // app.use("/", express.static(path.join(__dirname, "../../public"), { etag: false, maxAge: 0 }));
 

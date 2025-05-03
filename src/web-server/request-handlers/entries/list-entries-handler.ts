@@ -1,13 +1,18 @@
 import { EntryEntity } from "../../../types";
-import { Request, NextFunction } from 'express';
+import { Request, NextFunction, Response } from 'express';
 import { InMemoryDb } from "../../../databases/in-memory";
 
-const listEntriesHandler = async (req: Request, res: Response<EntryEntity[] | string> next: NextFunction) => {
+// TODO: fix any
+const listEntriesHandler = async (req: Request, res: Response<any[] | string>, next: NextFunction) => {
+
+    console.log('reached handler')
     // implement use case and call it
 
+    const entryEntityGateway = req.appProfile.getEntryEntityGateway();
 
-    const appProfile = req.appProfile;
+    const entries = await entryEntityGateway.list();
 
-    const useCase = new 
-    
+    res.send(entries);
 }
+
+export { listEntriesHandler }

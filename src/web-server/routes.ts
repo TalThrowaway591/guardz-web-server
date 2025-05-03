@@ -4,3 +4,5 @@ const routes = {
         list: "/entries"
     }
 }
+
+export { routes }
