@@ -35,21 +35,29 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 require("dotenv/config");
+var http_1 = __importDefault(require("http"));
 var server_1 = require("./server");
 var config_1 = require("./config");
-// import { createPostgresqlConnection } from "../config";
+var stream_1 = require("stream");
+var socket_1 = require("./socket");
 var main = function () { return __awaiter(void 0, void 0, void 0, function () {
-    var PORT, app;
+    var PORT, emitter, app, server;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                PORT = config_1.Config.get("web-server.port") || 1234;
-                return [4 /*yield*/, (0, server_1.createServer)()];
+                PORT = config_1.Config.get("web-server.port") || 80;
+                emitter = new stream_1.EventEmitter();
+                return [4 /*yield*/, (0, server_1.createServer)(emitter)];
             case 1:
                 app = _a.sent();
-                app.listen(PORT, function () {
+                server = http_1.default.createServer(app);
+                (0, socket_1.createSocket)(server, emitter);
+                server.listen(PORT, function () {
                     console.log("listening on port ".concat(PORT));
                 });
                 return [2 /*return*/];
@@ -57,4 +65,4 @@ var main = function () { return __awaiter(void 0, void 0, void 0, function () {
     });
 }); };
 main();
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi9zcmMvd2ViLXNlcnZlci9pbmRleC50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OztBQUFBLHlCQUFzQjtBQUN0QixtQ0FBd0M7QUFHeEMsbUNBQWtDO0FBRWxDLDBEQUEwRDtBQUUxRCxJQUFNLElBQUksR0FBRzs7Ozs7Z0JBQ0gsSUFBSSxHQUFHLGVBQU0sQ0FBQyxHQUFHLENBQUMsaUJBQWlCLENBQUMsSUFBSSxJQUFJLENBQUM7Z0JBYXZDLHFCQUFNLElBQUEscUJBQVksR0FBRSxFQUFBOztnQkFBMUIsR0FBRyxHQUFHLFNBQW9CO2dCQUVoQyxHQUFHLENBQUMsTUFBTSxDQUFDLElBQUksRUFBRTtvQkFDYixPQUFPLENBQUMsR0FBRyxDQUFDLDRCQUFxQixJQUFJLENBQUUsQ0FBQyxDQUFDO2dCQUM3QyxDQUFDLENBQUMsQ0FBQzs7OztLQUNOLENBQUM7QUFFRixJQUFJLEVBQUUsQ0FBQyJ9
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi9zcmMvd2ViLXNlcnZlci9pbmRleC50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OztBQUFBLHlCQUFzQjtBQUN0Qiw4Q0FBd0I7QUFDeEIsbUNBQXdDO0FBQ3hDLG1DQUFrQztBQUVsQyxpQ0FBc0M7QUFDdEMsbUNBQXdDO0FBRXhDLElBQU0sSUFBSSxHQUFHOzs7OztnQkFFSCxJQUFJLEdBQUcsZUFBTSxDQUFDLEdBQUcsQ0FBQyxpQkFBaUIsQ0FBQyxJQUFJLEVBQUUsQ0FBQztnQkFFM0MsT0FBTyxHQUFHLElBQUkscUJBQVksRUFBRSxDQUFDO2dCQUV2QixxQkFBTSxJQUFBLHFCQUFZLEVBQUMsT0FBTyxDQUFDLEVBQUE7O2dCQUFqQyxHQUFHLEdBQUcsU0FBMkI7Z0JBRWpDLE1BQU0sR0FBRyxjQUFJLENBQUMsWUFBWSxDQUFDLEdBQUcsQ0FBQyxDQUFDO2dCQUV0QyxJQUFBLHFCQUFZLEVBQUMsTUFBTSxFQUFFLE9BQU8sQ0FBQyxDQUFBO2dCQUU3QixNQUFNLENBQUMsTUFBTSxDQUFDLElBQUksRUFBRTtvQkFDaEIsT0FBTyxDQUFDLEdBQUcsQ0FBQyw0QkFBcUIsSUFBSSxDQUFFLENBQUMsQ0FBQztnQkFDN0MsQ0FBQyxDQUFDLENBQUM7Ozs7S0FDTixDQUFDO0FBRUYsSUFBSSxFQUFFLENBQUMifQ==

@@ -1,4 +1,4 @@
-import { Database, IPostgresql } from "../types";
+import { Database } from "../types";
 import { Client } from 'pg';
 
 export class PostgresqlDB<T extends object> implements Database<T> {
@@ -28,15 +28,9 @@ export class PostgresqlDB<T extends object> implements Database<T> {
             ""
         );
 
-        console.log('columns', columns)
-        console.log('values', values)
-
         const query = `INSERT INTO ${this.tableName} (${columns}) VALUES (${values})`;
 
-        console.log('query', query)
-        const result = await this.client.query(query);
-
-        console.log(result.rows)
+        await this.client.query(query);
 
         return row;
     }

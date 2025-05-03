@@ -37,17 +37,13 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.listEntriesHandler = void 0;
-var get_ip_1 = require("../../utils/get-ip");
-// TODO: fix any
-var listEntriesHandler = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-    var entryEntityGateway, ipAddress, entries;
+var listEntriesHandler = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var entryEntityGateway, entries;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                console.log('reached list-entries-handler');
                 entryEntityGateway = req.appProfile.getEntryEntityGateway();
-                ipAddress = (0, get_ip_1.getUserIPAddress)(req);
-                return [4 /*yield*/, entryEntityGateway.listByIP(ipAddress)];
+                return [4 /*yield*/, entryEntityGateway.list()];
             case 1:
                 entries = _a.sent();
                 res.send(entries);
@@ -56,4 +52,4 @@ var listEntriesHandler = function (req, res, next) { return __awaiter(void 0, vo
     });
 }); };
 exports.listEntriesHandler = listEntriesHandler;
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoibGlzdC1lbnRyaWVzLWhhbmRsZXIuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi8uLi8uLi9zcmMvd2ViLXNlcnZlci9yZXF1ZXN0LWhhbmRsZXJzL2VudHJpZXMvbGlzdC1lbnRyaWVzLWhhbmRsZXIudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7O0FBR0EsNkNBQXNEO0FBQ3RELGdCQUFnQjtBQUNoQixJQUFNLGtCQUFrQixHQUFHLFVBQU8sR0FBWSxFQUFFLEdBQTZCLEVBQUUsSUFBa0I7Ozs7O2dCQUU3RixPQUFPLENBQUMsR0FBRyxDQUFDLDhCQUE4QixDQUFDLENBQUE7Z0JBR3JDLGtCQUFrQixHQUFHLEdBQUcsQ0FBQyxVQUFVLENBQUMscUJBQXFCLEVBQUUsQ0FBQztnQkFFNUQsU0FBUyxHQUFHLElBQUEseUJBQWdCLEVBQUMsR0FBRyxDQUFDLENBQUM7Z0JBRXhCLHFCQUFNLGtCQUFrQixDQUFDLFFBQVEsQ0FBQyxTQUFTLENBQUMsRUFBQTs7Z0JBQXRELE9BQU8sR0FBRyxTQUE0QztnQkFFNUQsR0FBRyxDQUFDLElBQUksQ0FBQyxPQUFPLENBQUMsQ0FBQzs7OztLQUNyQixDQUFBO0FBRVEsZ0RBQWtCIn0=
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoibGlzdC1lbnRyaWVzLWhhbmRsZXIuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi8uLi8uLi9zcmMvd2ViLXNlcnZlci9yZXF1ZXN0LWhhbmRsZXJzL2VudHJpZXMvbGlzdC1lbnRyaWVzLWhhbmRsZXIudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7O0FBRUEsSUFBTSxrQkFBa0IsR0FBRyxVQUFPLEdBQVksRUFBRSxHQUE2Qjs7Ozs7Z0JBQ25FLGtCQUFrQixHQUFHLEdBQUcsQ0FBQyxVQUFVLENBQUMscUJBQXFCLEVBQUUsQ0FBQztnQkFFbEQscUJBQU0sa0JBQWtCLENBQUMsSUFBSSxFQUFFLEVBQUE7O2dCQUF6QyxPQUFPLEdBQUcsU0FBK0I7Z0JBRS9DLEdBQUcsQ0FBQyxJQUFJLENBQUMsT0FBTyxDQUFDLENBQUM7Ozs7S0FDckIsQ0FBQTtBQUVRLGdEQUFrQiJ9

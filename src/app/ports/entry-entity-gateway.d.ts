@@ -5,7 +5,7 @@ interface EntryEntityGateway {
 
     list(): Promise<EntryEntity[]>;
 
-    listByIP(ipAddress: string): Promise<EntryEntity[]>;
+    // delete(id: string): Promise<void>;
 }
 
 export { EntryEntityGateway };

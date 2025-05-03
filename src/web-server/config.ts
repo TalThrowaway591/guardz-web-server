@@ -17,11 +17,8 @@ const Config = {
 
         await client.connect();
 
-
-        // TODO: add port
-        console.log('connected to postgres')
-
-        // const result = await client.query('select now()');
+        // @ts-ignore
+        console.log(`Connected to Postgres database on port ${connectionConfig.port}`)
 
         return client;
     }),

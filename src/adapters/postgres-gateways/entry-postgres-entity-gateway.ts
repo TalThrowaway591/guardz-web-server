@@ -6,13 +6,13 @@ import { EntryEntity } from "../../app/entities/entry-entity";
 const mapRowToEntry = (value: EntryEntityType): EntryEntity => {
     const { id, title, body, ip, createdtimestamp, active } = value;
 
-    const entryEntity = new EntryEntity(value.id);
+    const entryEntity = new EntryEntity(id);
 
     entryEntity.setTitle(title);
     entryEntity.setBody(body);
     entryEntity.setIP(ip);
-    // entryEntity.setCreatedTimestamp(createdtimestamp);
     entryEntity.setActive(active);
+    entryEntity.setCreatedTimestamp(Date.parse(createdtimestamp))
 
     return entryEntity;
 };
@@ -46,32 +46,20 @@ class EntryPostgresEntityGateway implements EntryEntityGateway {
     }
 
     async list(): Promise<EntryEntity[]> {
-        console.log('entry-postgres-entity-gateway list')
-
         const result = await this.db.get();
-
-        console.log(result);
 
         return result.map(value => mapRowToEntry(value));
     }
 
     async listByIP(ipAddress: string): Promise<EntryEntity[]> {
-        console.log('entry-postgres-entity-gateway list by ip')
-
         const result = await this.db.get();
 
         const entries = result.map(value => mapRowToEntry(value));
 
         return entries.filter(entry => entry.getIP() === ipAddress)
-
     }
 
     async save(entryEntity: EntryEntity): Promise<void> {
-        console.log('gateway: saving entry')
-        console.log(entryEntity);
-
-        console.log('converting entity')
-        console.log(mapEntryToRow(entryEntity));
         this.db.create(mapEntryToRow(entryEntity));
 
         return;

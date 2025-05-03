@@ -1,16 +1,11 @@
 import { Request, NextFunction, Response } from 'express';
-import { EntryEntity } from "../../../app/entities/entry-entity";
 import { getUserIPAddress } from '../../utils/get-ip';
+import { EntryEntity } from "../../../app/entities/entry-entity";
 
-const createEntryHandler = async (req: Request, res: Response<any[] | string>, next: NextFunction) => {
-    console.log('reached handler')
-    console.log('request body')
-    console.log(req.body)
-
+const createEntryHandler = async (req: Request, res: Response<any[] | string>) => {
     const { title, body } = req.body;
 
     const userIPAddress = getUserIPAddress(req);
-
 
     const entryEntityGateway = req.appProfile.getEntryEntityGateway();
 
@@ -22,9 +17,12 @@ const createEntryHandler = async (req: Request, res: Response<any[] | string>, n
     entryEntity.setActive(true);
     entryEntity.setCreatedTimestamp(Date.now())
 
-    console.log(entryEntity);
+    await entryEntityGateway.save(entryEntity);
 
-    const test = await entryEntityGateway.save(entryEntity);
+    // save successful -> emit event
+    const eventEmitter = req.appProfile.getEventEmitter();
+    eventEmitter.emit('on-create', { title, body })
+
 
     res.send()
 }

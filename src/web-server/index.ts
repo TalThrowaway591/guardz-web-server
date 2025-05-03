@@ -1,28 +1,24 @@
 import 'dotenv/config'
+import http from 'http';
 import { createServer } from "./server";
-import { Entity, EntryEntityType } from "../types";
-import { InMemoryDb } from "../databases/in-memory";
 import { Config } from "./config";
-import { PostgresqlDB } from "../databases/postgresql";
-// import { createPostgresqlConnection } from "../config";
+import { Server, Socket } from 'socket.io';
+import { EventEmitter } from 'stream';
+import { createSocket } from './socket';
 
 const main = async () => {
-    const PORT = Config.get("web-server.port") || 1234;
 
-    //   const postEntityGateway = new Mysql<Post>(createMysqlConnection(), "posts");
+    const PORT = Config.get("web-server.port") || 80;
 
-    // const mysqlClientPosts = new InMemoryDb<Post>("posts", []);
+    const emitter = new EventEmitter();
 
-    // temp: create in memory database
-    // const database = new InMemoryDb<EntryEntity>("entries", []);
+    const app = await createServer(emitter);
 
-    // const postgresClient = await createPostgresqlConnection();
+    const server = http.createServer(app);
 
-    // const entryEntityGateway = new PostgresqlDB<EntryEntity>(postgresClient, "entry");
+    createSocket(server, emitter)
 
-    const app = await createServer();
-
-    app.listen(PORT, () => {
+    server.listen(PORT, () => {
         console.log(`listening on port ${PORT}`);
     });
 };

@@ -1,22 +1,15 @@
 import path from 'path'
-import express, { Application, Request, Response, NextFunction } from "express";
-import { Database, EntryEntityType, Entity } from "../types";
-import nanoid from "nanoid";
-import { InMemoryDb } from "../databases/in-memory";
-import { AppProfile } from "./app-profile/app-profile";
-import { LocalAppProfile } from "./app-profile/local-app-profile";
+import events from 'events'
+
 import { routes } from "./routes";
 import { Config } from "./config";
+import { EntryEntityType } from "../types";
+import { InMemoryDb } from "../databases/in-memory";
+import { AppProfile } from "./app-profile/app-profile";
 import * as requestHandlers from "./request-handlers/index";
-// import { LocaAppProfile } from "./app-profile/local-app-profile";
-// import { Config } from "./config";
-// import { AppProfile } from "./app-profile/app-profile";
-// import path from "path";
+import { LocalAppProfile } from "./app-profile/local-app-profile";
 
-// const appProfileMiddlewareFactory = (appProfile: AppProfile) => (req: Request, res: Response, next: NextFunction) => {
-//     req.appProfile = appProfile;
-//     next();
-// };
+import express, { Application, Request, Response, NextFunction } from "express";
 
 const appProfileMiddlewareFactory = (appProfile: AppProfile) => (req: Request, res: Response, next: NextFunction) => {
     req.appProfile = appProfile;
@@ -47,19 +40,33 @@ const registerMiddlewares = (app: Application, appProfile: AppProfile): Applicat
     return app;
 };
 
-const registerRequestHandlers = (app: Application): Application => {
+// TODO: modify to use builder design pattern?
+
+const registerRequestHandlers = (app: Application) => {
     app.get(routes.entries.list, requestHandlers.listEntriesHandler);
+
     app.post(routes.entries.create, requestHandlers.createEntryHandler);
 
-    return app;
+    app.get("/heartbeat", (req: Request, res: Response) => { res.send(1) });
 };
 
-const createServer = async (): Promise<Application> => {
+const registerStaticContent = (app: Application): void => {
+    const assetsPath = path.join(__dirname, "..", "..", "public/client");
+
+    console.log(assetsPath)
+    app.use("/", express.static(assetsPath));
+
+    app.use("/submit", express.static(assetsPath));
+
+    app.use("/data", express.static(assetsPath));
+}
+
+const createServer = async (eventEmitter: events): Promise<Application> => {
     const app = express();
 
     const inMemoryDb = createInMemoryDb();
 
-    const config = { inMemoryDb, postgresqlClient: await Config.gePostgresClient() };
+    const config = { inMemoryDb, postgresqlClient: await Config.gePostgresClient(), eventEmitter };
 
     const appProfile = new LocalAppProfile(config);
 
@@ -67,15 +74,7 @@ const createServer = async (): Promise<Application> => {
 
     registerRequestHandlers(app);
 
-    const assetsPath = path.join(__dirname, "../../../guardz-app/build/client");
-
-    console.log('assetsPath', assetsPath)
-
-    app.use("/", express.static(assetsPath));
-
-    app.use("/submit", express.static(assetsPath));
-
-    app.use("/data", express.static(assetsPath));
+    registerStaticContent(app)
 
     return app;
 };
