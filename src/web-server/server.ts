@@ -47,6 +47,7 @@ const registerMiddlewares = (app: Application, appProfile: AppProfile): Applicat
 
 const registerRequestHandlers = (app: Application): Application => {
     app.get(routes.entries.list, requestHandlers.listEntriesHandler);
+    app.post(routes.entries.create, requestHandlers.createEntryHandler);
 
     return app;
 };
