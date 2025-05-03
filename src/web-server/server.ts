@@ -1,10 +1,11 @@
 import express, { Application, Request, Response, NextFunction } from "express";
-import { Database, EntryEntity, Entity } from "../types";
+import { Database, EntryEntityType, Entity } from "../types";
 import nanoid from "nanoid";
 import { InMemoryDb } from "../databases/in-memory";
 import { AppProfile } from "./app-profile/app-profile";
 import { LocalAppProfile } from "./app-profile/local-app-profile";
 import { routes } from "./routes";
+import { Config } from "./config";
 import * as requestHandlers from "./request-handlers/index";
 // import { LocaAppProfile } from "./app-profile/local-app-profile";
 // import { Config } from "./config";
@@ -21,8 +22,8 @@ const appProfileMiddlewareFactory = (appProfile: AppProfile) => (req: Request, r
     next();
 };
 
-const createInMemoryDb = (): InMemoryDb<EntryEntity> => {
-    const inMemoryDb = new InMemoryDb<EntryEntity>("entries", []);
+const createInMemoryDb = (): InMemoryDb<EntryEntityType> => {
+    const inMemoryDb = new InMemoryDb<EntryEntityType>("entries", []);
 
     return inMemoryDb;
 }
@@ -52,12 +53,12 @@ const registerRequestHandlers = (app: Application): Application => {
     return app;
 };
 
-const createServer = async (database: InMemoryDb<EntryEntity>): Promise<Application> => {
+const createServer = async (): Promise<Application> => {
     const app = express();
 
     const inMemoryDb = createInMemoryDb();
 
-    const config = { inMemoryDb };
+    const config = { inMemoryDb, postgresqlClient: await Config.gePostgresClient() };
 
     const appProfile = new LocalAppProfile(config);
 

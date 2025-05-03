@@ -1,20 +1,27 @@
-import * as mysql from "mysql2";
+import { Client } from 'pg';
 
 const createConfig = () => ({
     port: 3000,
-    mysql: {
-        host: process.env.MYSQL_HOST,
-        user: process.env.MYSQL_USERNAME,
-        database: process.env.MYSQL_DATABASE,
-        password: process.env.MYSQL_PASSWORD,
+    postgresql: {
+        host: process.env.POSTGRESQL_HOST,
+        port: Number(process.env.POSTGRESQL_PORT),
+        user: process.env.POSTGRESQL_USERNAME,
+        database: process.env.POSTGRESQL_DATABASE,
+        password: process.env.POSTGRESQL_PASSWORD,
     },
 });
 
-const createMysqlConnection = () => {
-    const config = createConfig();
+// const createPostgresqlConnection = async () => {
+//     const config = createConfig();
 
-    return mysql.createConnection(config.mysql);
-};
+//     const client = new Client(config.postgresql);
+
+//     await client.connect();
+
+//     console.log(`Connected to postgres DB on port ${config.postgresql.port}`)
+
+//     return client;
+// };
 
 const getDatabase = () => {
     if (process.env.NODE_ENV === 'local') {
@@ -25,4 +32,4 @@ const getDatabase = () => {
 
 }
 
-export { createMysqlConnection, createConfig };
+export { createConfig };

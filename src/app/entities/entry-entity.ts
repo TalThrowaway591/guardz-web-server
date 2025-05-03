@@ -12,7 +12,7 @@ class EntryEntity extends Entity {
     private active: boolean = true;
 
     public constructor(id?: string) {
-        super("post", id);
+        super("entry", id);
     }
 
     public setTitle(title: string): void {

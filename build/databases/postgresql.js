@@ -36,112 +36,58 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Postgresql = void 0;
-function updateQuerySetter(row) {
-    var setQuery = "";
-    for (var _i = 0, _a = Object.keys(row); _i < _a.length; _i++) {
-        var key = _a[_i];
-        setQuery += "".concat(key, "=").concat(typeof row[key] === "string" ? "\"".concat(row[key], "\"") : row[key], ", ");
-    }
-    setQuery += "updatedTimestamp=".concat(new Date().getTime());
-    return setQuery;
-}
-var Postgresql = /** @class */ (function () {
-    function Postgresql(connection, tableName) {
-        this.connection = connection;
+exports.PostgresqlDB = void 0;
+var PostgresqlDB = /** @class */ (function () {
+    function PostgresqlDB(client, tableName) {
+        this.client = client;
         this.tableName = tableName;
     }
-    Postgresql.prototype.get = function () {
+    PostgresqlDB.prototype.get = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var rows;
+            var query, result;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.connection.promise().execute("SELECT * FROM ".concat(this.tableName))];
+                    case 0:
+                        query = "SELECT * FROM ".concat(this.tableName);
+                        return [4 /*yield*/, this.client.query(query)];
                     case 1:
-                        rows = _a.sent();
-                        return [2 /*return*/, rows[0]];
+                        result = (_a.sent()).rows;
+                        return [2 /*return*/, result];
                 }
             });
         });
     };
-    Postgresql.prototype.create = function (row) {
+    PostgresqlDB.prototype.create = function (row) {
         return __awaiter(this, void 0, void 0, function () {
-            var columns, values, query, response, id, rows;
+            var columns, values, query, result;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         columns = Object.keys(row).reduce(function (previous, current) { return "".concat(previous.length > 0 ? "".concat(previous, ",") : previous, " ").concat(current); }, "");
                         values = Object.values(row).reduce(function (previous, current) {
-                            return "".concat(previous.length > 0 ? "".concat(previous, ",") : previous, " ").concat(typeof current === "string" ? "\"".concat(current, "\"") : current);
+                            return "".concat(previous.length > 0 ? "".concat(previous, ",") : previous, " ").concat(typeof current === "string" ? "'".concat(current, "'") : current);
                         }, "");
+                        console.log('columns', columns);
+                        console.log('values', values);
                         query = "INSERT INTO ".concat(this.tableName, " (").concat(columns, ") VALUES (").concat(values, ")");
-                        return [4 /*yield*/, this.connection.promise().execute(query)];
+                        console.log('query', query);
+                        return [4 /*yield*/, this.client.query(query)];
                     case 1:
-                        response = _a.sent();
-                        id = response[0].insertId;
-                        return [4 /*yield*/, this.connection.promise().execute("SELECT * FROM ".concat(this.tableName, " WHERE id = ").concat(id))];
-                    case 2:
-                        rows = (_a.sent())[0];
-                        return [2 /*return*/, rows[0]];
+                        result = _a.sent();
+                        console.log(result.rows);
+                        return [2 /*return*/, row];
                 }
             });
         });
     };
-    Postgresql.prototype.find = function (id) {
+    PostgresqlDB.prototype.find = function (id) {
         return __awaiter(this, void 0, void 0, function () {
-            var query, rows, e_1;
             return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 2, , 3]);
-                        query = "SELECT * FROM ".concat(this.tableName, " WHERE id = \"").concat(id, "\"");
-                        return [4 /*yield*/, this.connection.promise().execute(query)];
-                    case 1:
-                        rows = (_a.sent())[0];
-                        if (!rows[0]) {
-                            throw new Error("Row not found");
-                        }
-                        return [2 /*return*/, rows[0]];
-                    case 2:
-                        e_1 = _a.sent();
-                        throw new Error("Cannot connect to ".concat(this.tableName, " ").concat(e_1));
-                    case 3: return [2 /*return*/];
-                }
+                return [2 /*return*/, null];
             });
         });
     };
-    Postgresql.prototype.update = function (id, row) {
-        return __awaiter(this, void 0, void 0, function () {
-            var updateSubQuery, query;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        updateSubQuery = updateQuerySetter(row);
-                        query = "UPDATE ".concat(this.tableName, " SET ").concat(updateSubQuery, " WHERE id=\"").concat(id, "\"");
-                        return [4 /*yield*/, this.connection.promise().execute(query)];
-                    case 1:
-                        _a.sent();
-                        return [2 /*return*/];
-                }
-            });
-        });
-    };
-    Postgresql.prototype.delete = function (id) {
-        return __awaiter(this, void 0, void 0, function () {
-            var query;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        query = "DELETE FROM ".concat(this.tableName, " WHERE id=\"").concat(id, "\"");
-                        return [4 /*yield*/, this.connection.promise().execute(query)];
-                    case 1:
-                        _a.sent();
-                        return [2 /*return*/];
-                }
-            });
-        });
-    };
-    return Postgresql;
+    return PostgresqlDB;
 }());
-exports.Postgresql = Postgresql;
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoicG9zdGdyZXNxbC5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uL3NyYy9kYXRhYmFzZXMvcG9zdGdyZXNxbC50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7QUFFQSxTQUFTLGlCQUFpQixDQUFtQixHQUFNO0lBQy9DLElBQUksUUFBUSxHQUFHLEVBQUUsQ0FBQztJQUNsQixLQUFrQixVQUFnQixFQUFoQixLQUFBLE1BQU0sQ0FBQyxJQUFJLENBQUMsR0FBRyxDQUFDLEVBQWhCLGNBQWdCLEVBQWhCLElBQWdCLEVBQUUsQ0FBQztRQUFoQyxJQUFNLEdBQUcsU0FBQTtRQUNWLFFBQVEsSUFBSSxVQUFHLEdBQUcsY0FBSSxPQUFRLEdBQVcsQ0FBQyxHQUFHLENBQUMsS0FBSyxRQUFRLENBQUMsQ0FBQyxDQUFDLFlBQUssR0FBVyxDQUFDLEdBQUcsQ0FBQyxPQUFHLENBQUMsQ0FBQyxDQUFFLEdBQVcsQ0FBQyxHQUFHLENBQUMsT0FBSSxDQUFDO0lBQ25ILENBQUM7SUFDRCxRQUFRLElBQUksMkJBQW9CLElBQUksSUFBSSxFQUFFLENBQUMsT0FBTyxFQUFFLENBQUUsQ0FBQztJQUV2RCxPQUFPLFFBQVEsQ0FBQztBQUNwQixDQUFDO0FBRUQ7SUFJSSxvQkFBWSxVQUFlLEVBQUUsU0FBaUI7UUFDMUMsSUFBSSxDQUFDLFVBQVUsR0FBRyxVQUFVLENBQUM7UUFDN0IsSUFBSSxDQUFDLFNBQVMsR0FBRyxTQUFTLENBQUM7SUFDL0IsQ0FBQztJQUNLLHdCQUFHLEdBQVQ7Ozs7OzRCQUNpQixxQkFBTSxJQUFJLENBQUMsVUFBVSxDQUFDLE9BQU8sRUFBRSxDQUFDLE9BQU8sQ0FBQyx3QkFBaUIsSUFBSSxDQUFDLFNBQVMsQ0FBRSxDQUFDLEVBQUE7O3dCQUFqRixJQUFJLEdBQUcsU0FBMEU7d0JBRXZGLHNCQUFPLElBQUksQ0FBQyxDQUFDLENBQUMsRUFBQzs7OztLQUNsQjtJQUVL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
+exports.PostgresqlDB = PostgresqlDB;
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoicG9zdGdyZXNxbC5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uL3NyYy9kYXRhYmFzZXMvcG9zdGdyZXNxbC50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7QUFHQTtJQUlJLHNCQUFZLE1BQVcsRUFBRSxTQUFpQjtRQUN0QyxJQUFJLENBQUMsTUFBTSxHQUFHLE1BQU0sQ0FBQztRQUNyQixJQUFJLENBQUMsU0FBUyxHQUFHLFNBQVMsQ0FBQztJQUMvQixDQUFDO0lBQ0ssMEJBQUcsR0FBVDs7Ozs7O3dCQUNVLEtBQUssR0FBRyx3QkFBaUIsSUFBSSxDQUFDLFNBQVMsQ0FBRSxDQUFBO3dCQUUvQixxQkFBTSxJQUFJLENBQUMsTUFBTSxDQUFDLEtBQUssQ0FBQyxLQUFLLENBQUMsRUFBQTs7d0JBQXhDLE1BQU0sR0FBRyxDQUFDLFNBQThCLENBQUMsQ0FBQyxJQUFJO3dCQUVwRCxzQkFBTyxNQUFNLEVBQUM7Ozs7S0FDakI7SUFFSyw2QkFBTSxHQUFaLFVBQWEsR0FBTTs7Ozs7O3dCQUNULE9BQU8sR0FBRyxNQUFNLENBQUMsSUFBSSxDQUFDLEdBQUcsQ0FBQyxDQUFDLE1BQU0sQ0FDbkMsVUFBQyxRQUFnQixFQUFFLE9BQWUsSUFBSyxPQUFBLFVBQUcsUUFBUSxDQUFDLE1BQU0sR0FBRyxDQUFDLENBQUMsQ0FBQyxDQUFDLFVBQUcsUUFBUSxNQUFHLENBQUMsQ0FBQyxDQUFDLFFBQVEsY0FBSSxPQUFPLENBQUUsRUFBL0QsQ0FBK0QsRUFDdEcsRUFBRSxDQUNMLENBQUM7d0JBQ0ksTUFBTSxHQUFHLE1BQU0sQ0FBQyxNQUFNLENBQUMsR0FBRyxDQUFDLENBQUMsTUFBTSxDQUNwQyxVQUFDLFFBQWdCLEVBQUUsT0FBZTs0QkFDOUIsT0FBQSxVQUFHLFFBQVEsQ0FBQyxNQUFNLEdBQUcsQ0FBQyxDQUFDLENBQUMsQ0FBQyxVQUFHLFFBQVEsTUFBRyxDQUFDLENBQUMsQ0FBQyxRQUFRLGNBQUksT0FBTyxPQUFPLEtBQUssUUFBUSxDQUFDLENBQUMsQ0FBQyxXQUFJLE9BQU8sTUFBRyxDQUFDLENBQUMsQ0FBQyxPQUFPLENBQUU7d0JBQTlHLENBQThHLEVBQ2xILEVBQUUsQ0FDTCxDQUFDO3dCQUVGLE9BQU8sQ0FBQyxHQUFHLENBQUMsU0FBUyxFQUFFLE9BQU8sQ0FBQyxDQUFBO3dCQUMvQixPQUFPLENBQUMsR0FBRyxDQUFDLFFBQVEsRUFBRSxNQUFNLENBQUMsQ0FBQTt3QkFFdkIsS0FBSyxHQUFHLHNCQUFlLElBQUksQ0FBQyxTQUFTLGVBQUssT0FBTyx1QkFBYSxNQUFNLE1BQUcsQ0FBQzt3QkFFOUUsT0FBTyxDQUFDLEdBQUcsQ0FBQyxPQUFPLEVBQUUsS0FBSyxDQUFDLENBQUE7d0JBQ1oscUJBQU0sSUFBSSxDQUFDLE1BQU0sQ0FBQyxLQUFLLENBQUMsS0FBSyxDQUFDLEVBQUE7O3dCQUF2QyxNQUFNLEdBQUcsU0FBOEI7d0JBRTdDLE9BQU8sQ0FBQyxHQUFHLENBQUMsTUFBTSxDQUFDLElBQUksQ0FBQyxDQUFBO3dCQUV4QixzQkFBTyxHQUFHLEVBQUM7Ozs7S0FDZDtJQUVLLDJCQUFJLEdBQVYsVUFBVyxFQUFVOzs7Z0JBQ2pCLHNCQUFPLElBQUksRUFBQTs7O0tBQ2Q7SUFFTCxtQkFBQztBQUFELENBQUMsQUE1Q0QsSUE0Q0M7QUE1Q1ksb0NBQVkifQ==

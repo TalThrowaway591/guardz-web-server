@@ -3,8 +3,8 @@ export interface Database<T> {
     create: (cat: T) => Promise<T>;
     get: () => Promise<T[]>;
     find: (id: string) => Promise<T | null>;
-    update: (id: string, row: T) => Promise<void>;
-    delete: (id: string) => Promise<void>;
+    // update: (id: string, row: T) => Promise<void>;
+    // delete: (id: string) => Promise<void>;
 }
 
 export interface IInMemoryDb<T> extends Database<T> {
@@ -19,10 +19,11 @@ export type Entity = {
     id: string;
 };
 
-export type EntryEntity = Entity & {
+export type EntryEntityType = Entity & {
     title: string;
     body: string;
     ip: string;
-    createdTimestamp: number;
+    createdtimestamp: string;
     active: boolean;
 };
+

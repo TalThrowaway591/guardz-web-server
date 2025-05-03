@@ -1,10 +1,10 @@
+import 'dotenv/config'
 import { createServer } from "./server";
-import * as dotenv from "dotenv";
-import { Entity, EntryEntity } from "../types";
+import { Entity, EntryEntityType } from "../types";
 import { InMemoryDb } from "../databases/in-memory";
 import { Config } from "./config";
-
-dotenv.config();
+import { PostgresqlDB } from "../databases/postgresql";
+// import { createPostgresqlConnection } from "../config";
 
 const main = async () => {
     const PORT = Config.get("web-server.port") || 1234;
@@ -14,9 +14,13 @@ const main = async () => {
     // const mysqlClientPosts = new InMemoryDb<Post>("posts", []);
 
     // temp: create in memory database
-    const database = new InMemoryDb<EntryEntity>("entries", []);
+    // const database = new InMemoryDb<EntryEntity>("entries", []);
 
-    const app = await createServer(database);
+    // const postgresClient = await createPostgresqlConnection();
+
+    // const entryEntityGateway = new PostgresqlDB<EntryEntity>(postgresClient, "entry");
+
+    const app = await createServer();
 
     app.listen(PORT, () => {
         console.log(`listening on port ${PORT}`);

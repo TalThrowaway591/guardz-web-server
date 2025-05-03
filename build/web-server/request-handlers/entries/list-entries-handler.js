@@ -43,7 +43,7 @@ var listEntriesHandler = function (req, res, next) { return __awaiter(void 0, vo
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                console.log('reached handler');
+                console.log('reached list-entries-handler');
                 entryEntityGateway = req.appProfile.getEntryEntityGateway();
                 return [4 /*yield*/, entryEntityGateway.list()];
             case 1:
@@ -54,4 +54,4 @@ var listEntriesHandler = function (req, res, next) { return __awaiter(void 0, vo
     });
 }); };
 exports.listEntriesHandler = listEntriesHandler;
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoibGlzdC1lbnRyaWVzLWhhbmRsZXIuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi8uLi8uLi9zcmMvd2ViLXNlcnZlci9yZXF1ZXN0LWhhbmRsZXJzL2VudHJpZXMvbGlzdC1lbnRyaWVzLWhhbmRsZXIudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7O0FBSUEsZ0JBQWdCO0FBQ2hCLElBQU0sa0JBQWtCLEdBQUcsVUFBTyxHQUFZLEVBQUUsR0FBNkIsRUFBRSxJQUFrQjs7Ozs7Z0JBRTdGLE9BQU8sQ0FBQyxHQUFHLENBQUMsaUJBQWlCLENBQUMsQ0FBQTtnQkFHeEIsa0JBQWtCLEdBQUcsR0FBRyxDQUFDLFVBQVUsQ0FBQyxxQkFBcUIsRUFBRSxDQUFDO2dCQUVsRCxxQkFBTSxrQkFBa0IsQ0FBQyxJQUFJLEVBQUUsRUFBQTs7Z0JBQXpDLE9BQU8sR0FBRyxTQUErQjtnQkFFL0MsR0FBRyxDQUFDLElBQUksQ0FBQyxPQUFPLENBQUMsQ0FBQzs7OztLQUNyQixDQUFBO0FBRVEsZ0RBQWtCIn0=
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoibGlzdC1lbnRyaWVzLWhhbmRsZXIuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi8uLi8uLi9zcmMvd2ViLXNlcnZlci9yZXF1ZXN0LWhhbmRsZXJzL2VudHJpZXMvbGlzdC1lbnRyaWVzLWhhbmRsZXIudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7O0FBSUEsZ0JBQWdCO0FBQ2hCLElBQU0sa0JBQWtCLEdBQUcsVUFBTyxHQUFZLEVBQUUsR0FBNkIsRUFBRSxJQUFrQjs7Ozs7Z0JBRTdGLE9BQU8sQ0FBQyxHQUFHLENBQUMsOEJBQThCLENBQUMsQ0FBQTtnQkFHckMsa0JBQWtCLEdBQUcsR0FBRyxDQUFDLFVBQVUsQ0FBQyxxQkFBcUIsRUFBRSxDQUFDO2dCQUVsRCxxQkFBTSxrQkFBa0IsQ0FBQyxJQUFJLEVBQUUsRUFBQTs7Z0JBQXpDLE9BQU8sR0FBRyxTQUErQjtnQkFFL0MsR0FBRyxDQUFDLElBQUksQ0FBQyxPQUFPLENBQUMsQ0FBQzs7OztLQUNyQixDQUFBO0FBRVEsZ0RBQWtCIn0=

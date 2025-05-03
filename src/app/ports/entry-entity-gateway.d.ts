@@ -1,4 +1,4 @@
-import { EntryEntity } from "../entities/entry-entity";
+import { EntryEntity } from "../types";
 
 interface EntryEntityGateway {
     list(): Promise<EntryEntity[]>;

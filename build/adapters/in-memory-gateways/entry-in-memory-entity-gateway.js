@@ -36,25 +36,30 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-require("dotenv/config");
-var server_1 = require("./server");
-var config_1 = require("./config");
-// import { createPostgresqlConnection } from "../config";
-var main = function () { return __awaiter(void 0, void 0, void 0, function () {
-    var PORT, app;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                PORT = config_1.Config.get("web-server.port") || 1234;
-                return [4 /*yield*/, (0, server_1.createServer)()];
-            case 1:
-                app = _a.sent();
-                app.listen(PORT, function () {
-                    console.log("listening on port ".concat(PORT));
-                });
+exports.EntryInMemoryEntityGateway = void 0;
+var EntryInMemoryEntityGateway = /** @class */ (function () {
+    // TODO: change any
+    function EntryInMemoryEntityGateway(db) {
+        this.db = db;
+    }
+    EntryInMemoryEntityGateway.prototype.list = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var documents;
+            return __generator(this, function (_a) {
+                documents = this.db.get();
+                return [2 /*return*/, documents];
+            });
+        });
+    };
+    EntryInMemoryEntityGateway.prototype.save = function (entryEntity) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                this.db.create(entryEntity);
                 return [2 /*return*/];
-        }
-    });
-}); };
-main();
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi9zcmMvd2ViLXNlcnZlci9pbmRleC50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OztBQUFBLHlCQUFzQjtBQUN0QixtQ0FBd0M7QUFHeEMsbUNBQWtDO0FBRWxDLDBEQUEwRDtBQUUxRCxJQUFNLElBQUksR0FBRzs7Ozs7Z0JBQ0gsSUFBSSxHQUFHLGVBQU0sQ0FBQyxHQUFHLENBQUMsaUJBQWlCLENBQUMsSUFBSSxJQUFJLENBQUM7Z0JBYXZDLHFCQUFNLElBQUEscUJBQVksR0FBRSxFQUFBOztnQkFBMUIsR0FBRyxHQUFHLFNBQW9CO2dCQUVoQyxHQUFHLENBQUMsTUFBTSxDQUFDLElBQUksRUFBRTtvQkFDYixPQUFPLENBQUMsR0FBRyxDQUFDLDRCQUFxQixJQUFJLENBQUUsQ0FBQyxDQUFDO2dCQUM3QyxDQUFDLENBQUMsQ0FBQzs7OztLQUNOLENBQUM7QUFFRixJQUFJLEVBQUUsQ0FBQyJ9
+            });
+        });
+    };
+    return EntryInMemoryEntityGateway;
+}());
+exports.EntryInMemoryEntityGateway = EntryInMemoryEntityGateway;
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiZW50cnktaW4tbWVtb3J5LWVudGl0eS1nYXRld2F5LmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiLi4vLi4vLi4vc3JjL2FkYXB0ZXJzL2luLW1lbW9yeS1nYXRld2F5cy9lbnRyeS1pbi1tZW1vcnktZW50aXR5LWdhdGV3YXkudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7O0FBSUE7SUFLSSxtQkFBbUI7SUFDbkIsb0NBQW1CLEVBQW1CO1FBQ2xDLElBQUksQ0FBQyxFQUFFLEdBQUcsRUFBRSxDQUFDO0lBQ2pCLENBQUM7SUFFSyx5Q0FBSSxHQUFWOzs7O2dCQUNVLFNBQVMsR0FBRyxJQUFJLENBQUMsRUFBRSxDQUFDLEdBQUcsRUFBRSxDQUFDO2dCQUVoQyxzQkFBTyxTQUFTLEVBQUM7OztLQUNwQjtJQUVLLHlDQUFJLEdBQVYsVUFBVyxXQUF3Qjs7O2dCQUMvQixJQUFJLENBQUMsRUFBRSxDQUFDLE1BQU0sQ0FBQyxXQUFXLENBQUMsQ0FBQztnQkFFNUIsc0JBQU87OztLQUNWO0lBQ0wsaUNBQUM7QUFBRCxDQUFDLEFBckJELElBcUJDO0FBRVEsZ0VBQTBCIn0=
