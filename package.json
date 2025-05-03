@@ -18,7 +18,8 @@
         "fastify": "^5.3.2",
         "joi": "^17.13.3",
         "mysql2": "^3.14.1",
-        "nanoid": "^5.1.5"
+        "nanoid": "^3.3.4",
+        "postgres": "^3.4.5"
     },
     "devDependencies": {
         "@types/config": "^3.3.5",

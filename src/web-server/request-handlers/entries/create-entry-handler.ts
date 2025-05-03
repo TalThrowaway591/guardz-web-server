@@ -1,14 +1,16 @@
 import { Request, NextFunction, Response } from 'express';
-import { InMemoryDb } from "../../../databases/in-memory";
 import { EntryEntity } from "../../../app/entities/entry-entity";
 
 // TODO: fix any
 const createEntryHandler = async (req: Request, res: Response<any[] | string>, next: NextFunction) => {
+    console.log('reached handler')
+    console.log('request body')
+    console.log(req.body)
+
     const { title, body } = req.body;
 
     const ip = "tttt";
 
-    console.log('reached handler')
 
     const entryEntityGateway = req.appProfile.getEntryEntityGateway();
 

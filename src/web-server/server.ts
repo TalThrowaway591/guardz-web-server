@@ -37,8 +37,8 @@ const addCors = (req: Request, res: Response, next: NextFunction): void => {
 };
 
 const registerMiddlewares = (app: Application, appProfile: AppProfile): Application => {
-    //     app.use(express.json());
-    //     app.use(express.urlencoded({ extended: true }));
+    app.use(express.json());
+    app.use(express.urlencoded({ extended: true }));
     app.use(appProfileMiddlewareFactory(appProfile));
     app.use(addCors);
 
