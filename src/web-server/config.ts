@@ -13,6 +13,8 @@ const Config = {
     gePostgresClient: once(async (): Promise<Client> => {
         const connectionConfig = config.get("postgresql") as object;
 
+        console.log('connectionConfig')
+        console.log(connectionConfig)
         const client = new Client(connectionConfig)
 
         await client.connect();

@@ -1,0 +1,1 @@
+import{w as t}from"./with-props-JgkNGkv_.js";import{o}from"./chunk-AYJ5UCUI-AUvROpdD.js";import{T as e}from"./Title-DIvNA1MB.js";function p({}){return[{title:"Submit"},{name:"description",content:"Welcome to React Router!"}]}const a=t(function(){return o.jsx(e,{text:"Gaurdz Web Application"})});export{a as default,p as meta};
