@@ -1,4 +1,4 @@
-import { Request, NextFunction, Response } from 'express';
+import { Request, Response } from 'express';
 import { getUserIPAddress } from '../../utils/get-ip';
 import { EntryEntity } from "../../../app/entities/entry-entity";
 
