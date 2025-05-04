@@ -47,6 +47,8 @@ const registerRequestHandlers = (app: Application) => {
 
     app.post(routes.entries.create, requestHandlers.createEntryHandler);
 
+    app.delete(routes.entries.remove, requestHandlers.removeEntryHandler);
+
     app.get("/heartbeat", (req: Request, res: Response) => { res.send(1) });
 };
 

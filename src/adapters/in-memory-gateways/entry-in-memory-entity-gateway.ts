@@ -26,6 +26,12 @@ class EntryInMemoryEntityGateway implements EntryEntityGateway {
 
         return;
     }
+
+    async delete(entryId: string): Promise<void> {
+        this.db.delete(entryId);
+
+        return;
+    }
 }
 
 export { EntryInMemoryEntityGateway };

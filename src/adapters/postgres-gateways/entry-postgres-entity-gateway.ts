@@ -48,7 +48,9 @@ class EntryPostgresEntityGateway implements EntryEntityGateway {
     async list(): Promise<EntryEntity[]> {
         const result = await this.db.get();
 
-        return result.map(value => mapRowToEntry(value));
+        const entries = result.map(value => mapRowToEntry(value));
+
+        return entries.filter(entry => !!entry.isActive);
     }
 
     async listByIP(ipAddress: string): Promise<EntryEntity[]> {
@@ -56,11 +58,17 @@ class EntryPostgresEntityGateway implements EntryEntityGateway {
 
         const entries = result.map(value => mapRowToEntry(value));
 
-        return entries.filter(entry => entry.getIP() === ipAddress)
+        return entries.filter(entry => entry.getIP() === ipAddress && entry.isActive)
     }
 
     async save(entryEntity: EntryEntity): Promise<void> {
-        this.db.create(mapEntryToRow(entryEntity));
+        await this.db.create(mapEntryToRow(entryEntity));
+
+        return;
+    }
+
+    async delete(entryId: string): Promise<void> {
+        await this.db.delete(entryId);
 
         return;
     }

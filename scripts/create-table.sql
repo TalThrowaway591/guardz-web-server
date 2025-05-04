@@ -1,3 +1,4 @@
+-- init DB and seed it
 CREATE TABLE entries(
     id varchar(25),
     title varchar(127),

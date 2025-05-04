@@ -5,7 +5,7 @@ interface EntryEntityGateway {
 
     list(): Promise<EntryEntity[]>;
 
-    // delete(id: string): Promise<void>;
+    delete(id: string): Promise<void>;
 }
 
 export { EntryEntityGateway };

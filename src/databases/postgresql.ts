@@ -35,8 +35,17 @@ export class PostgresqlDB<T extends object> implements Database<T> {
         return row;
     }
 
-    async find(id: string) {
+    async find(entryId: string) {
         return null
     }
+
+    async delete(entryId: string) {
+        const query = `UPDATE ${this.tableName} SET active = false WHERE id='${entryId}'`
+
+        await this.client.query(query);
+
+        return null
+    }
+
 
 }
