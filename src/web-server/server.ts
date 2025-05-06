@@ -55,7 +55,6 @@ const registerRequestHandlers = (app: Application) => {
 const registerStaticContent = (app: Application): void => {
     const assetsPath = path.join(__dirname, "..", "..", "public");
 
-    console.log(assetsPath)
     app.use("/", express.static(assetsPath));
 
     app.use("/submit", express.static(assetsPath));

@@ -27,3 +27,5 @@ docker push talarbatov/guardz-web-server:1.0.0
 
 # sudo docker run -it --network api-net -p 80:80 -e POSTGRESQL_HOST=my-postgres talarbatov/guardz-web-server:1.0.0
 
+## init postgres container
+
