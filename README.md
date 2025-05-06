@@ -28,5 +28,9 @@ Both these modules are decoupled from the data-persistancy layer.
 
 - This is by no-means a production-ready project, but it does highlight many principles regarding clean code and architecture I'd like to talk about in-person.
 
+### TODO (didn't have the time)
+- DB administration (User & connection management, general security, etc.)
+- Process management (In case of process exit from an exception, restart process, can also be combined with container orchistration)
+
 
 

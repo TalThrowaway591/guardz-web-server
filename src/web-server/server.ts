@@ -57,9 +57,9 @@ const registerStaticContent = (app: Application): void => {
 
     app.use("/", express.static(assetsPath));
 
-    app.use("/submit", express.static(assetsPath));
+    app.use("/view-entries", express.static(assetsPath));
 
-    app.use("/data", express.static(assetsPath));
+    app.use("/submit-entry", express.static(assetsPath));
 }
 
 const createServer = async (eventEmitter: events): Promise<Application> => {

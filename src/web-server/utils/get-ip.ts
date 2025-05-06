@@ -5,13 +5,18 @@ const getUserIPAddress = (request: Request): string => {
     // determining user IP address, add exceptions
 
     // in case client is behind a proxy
-    const underlyingIP = request.headers['x-forwarded-for'];
+    let ip = request.headers['x-forwarded-for'];
 
-    if (typeof underlyingIP === "string") {
-        return underlyingIP;
+    if (typeof ip !== "string") {
+        ip = request.socket.remoteAddress || 'no-ip';
     }
 
-    return request.socket.remoteAddress || 'no-ip';
+    // some kind of patch to fix ipv4 and ipv6 mixup
+    if (ip.startsWith("::ffff:")) {
+        ip = ip.substring(7)
+    }
+
+    return ip;
 }
 
 export { getUserIPAddress }

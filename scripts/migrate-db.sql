@@ -16,7 +16,7 @@ values (
         'entry_vnb489y237u',
         'hello',
         'world',
-        'myip',
+        '::1',
         now(),
         true
     );

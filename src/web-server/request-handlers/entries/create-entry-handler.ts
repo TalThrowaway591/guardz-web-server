@@ -11,17 +11,20 @@ const createEntryHandler = async (req: Request, res: Response<any[] | string>) =
 
     const entryEntity = new EntryEntity();
 
+    const createdTimestamp = Date.now();
+
     entryEntity.setTitle(title);
     entryEntity.setBody(body);
     entryEntity.setIP(userIPAddress);
     entryEntity.setActive(true);
-    entryEntity.setCreatedTimestamp(Date.now())
+    entryEntity.setCreatedTimestamp(createdTimestamp)
 
     await entryEntityGateway.save(entryEntity);
 
     // save successful -> emit event
     const eventEmitter = req.appProfile.getEventEmitter();
-    eventEmitter.emit('on-create', { title, body })
+    eventEmitter.emit('on-create', { title, body, ip: userIPAddress, createdTimestamp })
+
 
 
     res.send()
