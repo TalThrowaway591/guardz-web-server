@@ -1,0 +1,23 @@
+# init postgres container
+
+# docker run --name my-postgres -e POSTGRES_PASSWORD=password --network api-net -d -p 5432:5432 postgres
+
+# enter container
+
+# docker exec -it my-postgres bash
+
+# enter dbms
+
+# psql -U postgres
+
+# create new db
+
+# create database guardz;
+
+# change to db
+
+# \c guardz
+
+# TODO: create table and insert rows
+
+# docker run -it --network api-net --name test6 -p 80:3000 talarbatov/guardz-web-server:1.0.0

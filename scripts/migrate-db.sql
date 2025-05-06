@@ -1,4 +1,8 @@
 -- init DB and seed it
+CREATE DATABASE guardz;
+
+\c guardz
+
 CREATE TABLE entries(
     id varchar(25),
     title varchar(127),
